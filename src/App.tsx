@@ -6,6 +6,7 @@ import { CartDrawer } from './components/CartDrawer';
 import { ProductQuickViewModal } from './components/ProductQuickViewModal';
 import { SearchModal } from './components/SearchModal';
 import { WhatsAppFloat } from './components/WhatsAppFloat';
+import { MetaTagManager } from './components/MetaTagManager';
 
 import { HomeView } from './views/HomeView';
 import { ShopView } from './views/ShopView';
@@ -122,6 +123,9 @@ const StoreContent: React.FC = () => {
       dir={locale === 'ar' ? 'rtl' : 'ltr'}
       className="min-h-screen flex flex-col bg-background text-foreground font-body antialiased sand-grain selection:bg-primary selection:text-primary-foreground"
     >
+      {/* Dynamic SEO & Social Share Meta Tag Manager */}
+      <MetaTagManager />
+
       {/* Global Header (hidden on admin dashboard for clean workspace) */}
       {!isAdminPage && <Header />}
 

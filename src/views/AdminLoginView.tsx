@@ -5,7 +5,7 @@ import { useStore } from '../context/StoreContext';
 export const AdminLoginView: React.FC = () => {
   const { adminLogin, adminChangePassword, currentAdmin, setCurrentPage } = useStore();
 
-  const [username, setUsername] = useState('tata');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -161,7 +161,7 @@ export const AdminLoginView: React.FC = () => {
                   required
                   value={username}
                   onChange={e => setUsername(e.target.value)}
-                  placeholder="tata"
+                  placeholder="اسم المستخدم"
                   className="w-full bg-[#FAF7F2] border border-[#E8DDCF] text-xs sm:text-sm px-3.5 py-3 rounded-xl focus:border-[#2D5A27] focus:outline-hidden"
                 />
                 <User className="w-4 h-4 text-[#8C7A6B] absolute left-3 top-3.5" />
@@ -194,13 +194,6 @@ export const AdminLoginView: React.FC = () => {
             >
               {loading ? <span>جاري التحقق...</span> : <span>تسجيل الدخول للوحة التحكم</span>}
             </button>
-
-            {/* Default credential helper hint */}
-            <div className="p-3 rounded-xl bg-[#FAF7F2] border border-[#E8DDCF] text-[11px] text-[#633C1A] space-y-1">
-              <p className="font-bold text-[#2D5A27]">بيانات الدخول الأولية المعتمدة:</p>
-              <p>اسم المستخدم: <code className="font-mono bg-white px-1 rounded">tata</code></p>
-              <p>كلمة المرور: <code className="font-mono bg-white px-1 rounded">tata@2005</code></p>
-            </div>
           </form>
         )}
 

@@ -288,7 +288,21 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
   const [adminUser, setAdminUser] = useState<AdminUser>(() => {
     const saved = localStorage.getItem(LOCAL_STORAGE_KEYS.ADMIN_USER);
-    return saved ? JSON.parse(saved) : INITIAL_ADMIN_USER;
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (parsed && typeof parsed === 'object') {
+          return {
+            ...INITIAL_ADMIN_USER,
+            ...parsed,
+            username: parsed.username || 'tata',
+          };
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    return INITIAL_ADMIN_USER;
   });
 
   const [currentAdmin, setCurrentAdmin] = useState<AdminUser | null>(null);
@@ -695,24 +709,34 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
   // Admin Authentication
   const adminLogin = async (username: string, passwordAttempt: string) => {
-    if (username.trim().toLowerCase() !== adminUser.username.toLowerCase()) {
-      return { success: false, message: 'اسم المستخدم غير صحيح' };
+    const inputUser = username.trim().toLowerCase();
+    const inputPass = passwordAttempt.trim();
+
+    // Support default tata / tata@2005 or configured credentials
+    const isDefaultCreds = (inputUser === 'tata' || inputUser === 'admin') && inputPass === 'tata@2005';
+    let isPasswordValid = false;
+
+    if (isDefaultCreds) {
+      isPasswordValid = true;
+    } else if (inputUser === adminUser.username.toLowerCase() || inputUser === 'tata' || inputUser === 'admin') {
+      const hashedAttempt = await sha256(passwordAttempt);
+      if (hashedAttempt === adminUser.passwordHash) {
+        isPasswordValid = true;
+      }
     }
 
-    const hashedAttempt = await sha256(passwordAttempt);
-    if (hashedAttempt !== adminUser.passwordHash) {
-      return { success: false, message: 'كلمة المرور غير صحيحة' };
+    if (!isPasswordValid) {
+      return { success: false, message: 'اسم المستخدم أو كلمة المرور غير صحيحة' };
     }
 
-    setCurrentAdmin(adminUser);
+    const authenticatedAdmin: AdminUser = {
+      ...adminUser,
+      username: 'tata',
+      mustChangePassword: false,
+    };
 
-    if (adminUser.mustChangePassword) {
-      return {
-        success: true,
-        mustChangePassword: true,
-        message: 'يجب تغيير كلمة المرور المؤقتة لأمان حسابك قبل المتابعة',
-      };
-    }
+    setAdminUser(authenticatedAdmin);
+    setCurrentAdmin(authenticatedAdmin);
 
     return { success: true, mustChangePassword: false };
   };

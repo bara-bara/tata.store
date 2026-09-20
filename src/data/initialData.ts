@@ -865,11 +865,11 @@ export const INITIAL_CUSTOMERS: Customer[] = [
 
 export const INITIAL_ADMIN_USER: AdminUser = {
   id: "admin-1",
-  username: "admin",
+  username: "tata",
   name: "مدير المتجر",
   email: "admin@tata.store",
   role: "Super Admin",
-  passwordHash: "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+  passwordHash: "22c4b81246ba2468b3e1a35c4b4307c58d522f971dc03525f08e8e5d0f538263",
   mustChangePassword: false,
   createdAt: "2026-01-01"
 };

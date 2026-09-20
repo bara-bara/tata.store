@@ -96,10 +96,26 @@ export const ProductDetailView: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleShare = () => {
+  const handleShare = async () => {
+    const shareData = {
+      title: `${product.name} | TATA.STORE`,
+      text: product.shortDescription || `${product.name} من واحة طاطا الأصيلة`,
+      url: window.location.href,
+    };
+
+    if (navigator.share && typeof navigator.share === 'function') {
+      try {
+        await navigator.share(shareData);
+        return;
+      } catch (err: unknown) {
+        // If user cancelled, do nothing; if error, fallback to clipboard
+        if ((err as Error)?.name === 'AbortError') return;
+      }
+    }
+
     try {
       if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
-        navigator.clipboard.writeText(window.location.href).catch(() => {});
+        await navigator.clipboard.writeText(window.location.href);
       }
     } catch (_) {}
     setCopiedLink(true);
