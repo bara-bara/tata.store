@@ -1,0 +1,6 @@
+{
+  "name": "TATA.STORE",
+  "description": "متجر إلكتروني احترافي لمنتجات واحات إقليم طاطا بالمغرب - تمور، كسكس، أعشاب طبيعية، زيوت، وصناعة تقليدية مع التوصيل لكافة المدن والدفع عند الاستلام.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

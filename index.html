@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <!-- Polyfill/Guard for environments where window.fetch has only a getter -->
+    <script>
+      (function() {
+        try {
+          var currentFetch = (typeof window !== 'undefined' && window.fetch) 
+            ? window.fetch.bind(window) 
+            : null;
+          
+          var descriptor = {
+            get: function() { return currentFetch; },
+            set: function(fn) { currentFetch = fn; },
+            configurable: true,
+            enumerable: true
+          };
+
+          if (typeof window !== 'undefined') {
+            try {
+              Object.defineProperty(window, 'fetch', descriptor);
+            } catch (e1) {
+              try {
+                if (typeof Window !== 'undefined' && Window.prototype) {
+                  Object.defineProperty(Window.prototype, 'fetch', descriptor);
+                }
+              } catch (e2) {}
+            }
+          }
+        } catch (err) {}
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TATA.STORE – منتوجات طاطا… من الواحة إلى باب دارك</title>
+    <meta name="description" content="متجر إلكتروني احترافي لمنتجات واحات إقليم طاطا بالمغرب - تمور، كسكس، أعشاب طبيعية، زيوت، وصناعة تقليدية مع التوصيل لكافة المدن والدفع عند الاستلام." />
+    <meta name="keywords" content="طاطا, تمور طاطا, كسكس طاطا, واحة طاطا, أعشاب صحراوية, عسل حر, منتوجات تقليدية, المغرب, TATA STORE" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="TATA.STORE – منتوجات طاطا… من الواحة إلى باب دارك" />
+    <meta property="og:description" content="اكتشف مذاق الواحة ومنتوجاتها الأصيلة مع خدمة التوصيل السريع لكافة مدن المغرب والدفع عند الاستلام." />
+    <meta property="og:site_name" content="TATA.STORE" />
+    <meta property="og:locale" content="ar_MA" />
+    
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="TATA.STORE – منتوجات طاطا… من الواحة إلى باب دارك" />
+    <meta name="twitter:description" content="متجر منتجات واحات طاطا الطبيعية والأصيلة بالمغرب." />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://media.base44.com/images/public/6ab03de99bf52d08424ee607/c168e1902_logo.png" />
+
+    <!-- Google Fonts: IBM Plex Sans Arabic, Amiri -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "OnlineStore",
+      "name": "TATA.STORE",
+      "description": "متجر إلكتروني متخصص في بيع وتسويق المنتجات التقليدية والطبيعية لواحات إقليم طاطا بالمغرب",
+      "url": "https://tata.store",
+      "telephone": "+212600000000",
+      "priceRange": "$$",
+      "paymentAccepted": "Cash on Delivery",
+      "currenciesAccepted": "MAD",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Tata",
+        "addressRegion": "Souss-Massa",
+        "addressCountry": "MA"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://tata.store/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+  </head>
+  <body class="bg-[#FAF7F2] text-[#2D241E] antialiased selection:bg-[#2D5A27] selection:text-white">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
